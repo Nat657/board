@@ -23,16 +23,29 @@ unset($_SESSION['form_errors'], $_SESSION['form_success'], $_SESSION['form_data'
 <head>
     <meta charset="UTF-8">
     <title>Post a Message</title>
+    <link rel="stylesheet" href="st.css">
 </head>
 <body>
 
+<main class="login-card">
+    <div class="header-area">
+        <div class="status-badge">
+            <span class="status-dot"></span> community board
+</div>
 <h2>Post a Message</h2>
-<p>Logged in as: <strong><?= htmlspecialchars($_SESSION['user_email'] ?? '') ?></strong>
+<P>share something with the community</p>
+</div>
+<div class="user-bar">
+<span>Logged in as: <strong><?= htmlspecialchars($_SESSION['user_email'] ?? '') ?>
+</strong>
+</span>
    | <a href="logout.php">Logout</a>
+</div>
 </p>
 
 <?php if (!empty($errors)): ?>
-    <ul style="color:red;">
+    <div class="alert alert-error">
+    <ul>
         <?php foreach ($errors as $error): ?>
             <li><?= htmlspecialchars($error) ?></li>
         <?php endforeach; ?>
@@ -40,26 +53,35 @@ unset($_SESSION['form_errors'], $_SESSION['form_success'], $_SESSION['form_data'
 <?php endif; ?>
 
 <?php if ($success): ?>
-    <p style="color:green;"><?= htmlspecialchars($success) ?></p>
+    <div class="alert alert-success">
+    <p><?= htmlspecialchars($success) ?></p>
+</div>
 <?php endif; ?>
 
 <!-- ✅ posts to itself -->
 <form action="PostMessage.php" method="POST">
-    <label>Subject:
+    <div class="form-group">
+    <label>Subject:</label>
         <input type="text" name="subject"
-               value="<?= htmlspecialchars($formData['subject'] ?? '') ?>" required>
-    </label><br><br>
-
-    <label>Name:
+               value="<?= htmlspecialchars($formData['subject'] ?? '') ?>" 
+               placeholder="what is this about?" 
+               required>
+</div>
+  <div class="form-group">
+    <label>Name: </label>
         <input type="text" name="name"
-               value="<?= htmlspecialchars($formData['name'] ?? '') ?>" required>
-    </label><br><br>
-
-    <label>Message:<br>
-        <textarea name="message" rows="5" cols="40" required><?= htmlspecialchars($formData['message'] ?? '') ?></textarea>
-    </label><br><br>
-
-    <button type="submit" name="submit">Post Message</button>
+               value="<?= htmlspecialchars($formData['name'] ?? '') ?>"   placeholder="Your name" 
+               required>
+</div>
+  <div class="form-group">
+    <label>Message:</label>
+        <textarea name="message" rows="5" 
+        placeholder="Your message"
+        required>
+            <?= htmlspecialchars($formData['message'] ?? '') ?>
+        </textarea>
+</div>
+    <button class="btn-submit" type="submit" name="submit">Post Message</button>
 </form>
 
 </body>
